@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AccountSwitch - 管理面板</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>AccountSwitch 管理面板</h1>
+    </header>
+    
+    <main class="main-content">
+      <!-- 布局设置 -->
+      <section class="section">
+        <h2 class="section-title">显示设置</h2>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="compactLayout">
+            <span>使用紧凑布局</span>
+          </label>
+          <p class="help-text">启用后将使管理面板和弹出窗口显示更紧凑</p>
+        </div>
+      </section>
+
+      <!-- Cookie配置 -->
+      <section class="section">
+        <h2 class="section-title">Cookie配置</h2>
+        <div class="form-group">
+          <label for="cookieKey">Cookie Key <span class="required">*</span></label>
+          <input type="text" id="cookieKey" placeholder="例如: oauth_token" class="input-field">
+          <p class="help-text">用于存储OAuth Token的Cookie键名</p>
+        </div>
+      </section>
+      
+      <!-- API配置 -->
+      <section class="section">
+        <h2 class="section-title">API配置（可选）</h2>
+        
+        <div class="form-group">
+          <label for="apiMethod">HTTP方法</label>
+          <select id="apiMethod" class="input-field">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="apiUrl">API URL</label>
+          <input type="text" id="apiUrl" placeholder="例如: https://api.example.com/token?email={email}" class="input-field">
+          <p class="help-text">支持占位符: {email}, {username}</p>
+        </div>
+        
+        <div class="form-group">
+          <label for="apiPayload">请求体 (Payload)</label>
+          <textarea id="apiPayload" rows="4" placeholder='例如: {"email": "{email}", "name": "{username}"}' class="input-field"></textarea>
+          <p class="help-text">JSON格式，支持占位符: {email}, {username}</p>
+        </div>
+        
+        <div class="form-group">
+          <label for="apiTokenPath">Token的JSONPath</label>
+          <input type="text" id="apiTokenPath" placeholder="例如: $.data.token 或 $.access_token" class="input-field">
+          <p class="help-text">用于从API响应中提取Token的JSONPath表达式</p>
+        </div>
+      </section>
+      
+      <!-- 账号管理 -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">账号管理</h2>
+          <button id="addAccountBtn" class="btn btn-primary">+ 添加账号</button>
+        </div>
+        
+        <div id="accountsList" class="accounts-list">
+          <!-- 账号列表将动态生成 -->
+        </div>
+      </section>
+      
+      <!-- 导入导出 -->
+      <section class="section">
+        <h2 class="section-title">导入/导出配置</h2>
+        <div class="import-export-actions">
+          <button id="exportBtn" class="btn btn-secondary">导出配置</button>
+          <button id="importBtn" class="btn btn-secondary">导入配置</button>
+          <input type="file" id="importFileInput" accept=".json" style="display: none;">
+        </div>
+      </section>
+      
+      <!-- 保存按钮 -->
+      <div class="save-section">
+        <button id="saveBtn" class="btn btn-success">保存所有配置</button>
+        <span id="saveStatus" class="save-status"></span>
+      </div>
+    </main>
+  </div>
+  
+  <!-- 添加/编辑账号模态框 -->
+  <div id="accountModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">添加账号</h3>
+        <button class="close-btn" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="accountName">账号名 <span class="required">*</span></label>
+          <input type="text" id="accountName" class="input-field" placeholder="例如: John Doe">
+        </div>
+        <div class="form-group">
+          <label for="accountEmail">邮箱 <span class="required">*</span></label>
+          <input type="email" id="accountEmail" class="input-field" placeholder="例如: john@example.com">
+        </div>
+        <div class="form-group">
+          <label for="accountToken">Token</label>
+          <div class="token-input-group">
+            <input type="text" id="accountToken" class="input-field" placeholder="可手动输入或点击刷新按钮获取">
+            <button id="refreshTokenBtn" class="btn btn-icon" title="从API获取Token">
+              <svg viewBox="0 0 24 24" width="20" height="20">
+                <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelBtn" class="btn btn-secondary">取消</button>
+        <button id="confirmBtn" class="btn btn-primary">确认</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="lib/browser-compat.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

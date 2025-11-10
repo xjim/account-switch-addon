@@ -1,0 +1,19 @@
+{
+  "cookieKey": "oauth_token",
+  "apiUrl": "https://api.example.com/auth/token?email={email}",
+  "apiMethod": "GET",
+  "apiPayload": "",
+  "apiTokenPath": "$.data.token",
+  "accounts": [
+    {
+      "name": "测试账号1",
+      "email": "test1@example.com",
+      "token": "example_token_1_replace_with_real_token"
+    },
+    {
+      "name": "测试账号2",
+      "email": "test2@example.com",
+      "token": "example_token_2_replace_with_real_token"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules (if using icon generation)
+node_modules/
+package-lock.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+venv/
+env/
+
+# Build outputs
+dist/
+build/
+*.zip
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Personal data (don't commit real tokens!)
+*.backup.json
+config.backup.json
+
+# Generated icons (optional, can be committed)
+# icons/*.png
+
+.amo-upload-uuid

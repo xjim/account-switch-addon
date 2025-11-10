@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #667eea;
+    }
+    .icon-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 30px 0;
+    }
+    .icon-box {
+      text-align: center;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+    }
+    canvas {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      display: block;
+      margin: 10px auto;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .instructions {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>AccountSwitch Icon Generator</h1>
+  
+  <div class="instructions">
+    <h3>使用说明：</h3>
+    <ol>
+      <li>点击"生成所有图标"按钮</li>
+      <li>右键点击每个生成的图标</li>
+      <li>选择"图片另存为..."</li>
+      <li>使用对应的文件名保存（icon16.png, icon32.png等）</li>
+      <li>将保存的文件放入icons文件夹</li>
+    </ol>
+  </div>
+  
+  <button onclick="generateAllIcons()">生成所有图标</button>
+  
+  <div class="icon-container" id="iconContainer"></div>
+  
+  <script>
+    function drawIcon(canvas, size) {
+      const ctx = canvas.getContext('2d');
+      canvas.width = size;
+      canvas.height = size;
+      
+      // Create gradient background
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
+      
+      // Draw rounded rectangle background
+      const radius = size / 5.3;
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.moveTo(radius, 0);
+      ctx.lineTo(size - radius, 0);
+      ctx.quadraticCurveTo(size, 0, size, radius);
+      ctx.lineTo(size, size - radius);
+      ctx.quadraticCurveTo(size, size, size - radius, size);
+      ctx.lineTo(radius, size);
+      ctx.quadraticCurveTo(0, size, 0, size - radius);
+      ctx.lineTo(0, radius);
+      ctx.quadraticCurveTo(0, 0, radius, 0);
+      ctx.closePath();
+      ctx.fill();
+      
+      // Scale factor for drawing
+      const scale = size / 128;
+      
+      // Draw user icons
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      
+      // Left user - head
+      ctx.beginPath();
+      ctx.arc(45 * scale, 50 * scale, 15 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Left user - body
+      ctx.beginPath();
+      ctx.ellipse(45 * scale, 75 * scale, 15 * scale, 12 * scale, 0, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Right user - head
+      ctx.beginPath();
+      ctx.arc(83 * scale, 50 * scale, 15 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Right user - body
+      ctx.beginPath();
+      ctx.ellipse(83 * scale, 75 * scale, 15 * scale, 12 * scale, 0, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Draw arrows
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 3 * scale;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      
+      // Top arrow (pointing right)
+      ctx.beginPath();
+      ctx.moveTo(55 * scale, 40 * scale);
+      ctx.lineTo(73 * scale, 40 * scale);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(73 * scale, 40 * scale);
+      ctx.lineTo(68 * scale, 35 * scale);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(73 * scale, 40 * scale);
+      ctx.lineTo(68 * scale, 45 * scale);
+      ctx.stroke();
+      
+      // Bottom arrow (pointing left)
+      ctx.beginPath();
+      ctx.moveTo(73 * scale, 60 * scale);
+      ctx.lineTo(55 * scale, 60 * scale);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(55 * scale, 60 * scale);
+      ctx.lineTo(60 * scale, 55 * scale);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(55 * scale, 60 * scale);
+      ctx.lineTo(60 * scale, 65 * scale);
+      ctx.stroke();
+    }
+    
+    function createIconBox(size) {
+      const box = document.createElement('div');
+      box.className = 'icon-box';
+      
+      const title = document.createElement('h3');
+      title.textContent = `icon${size}.png`;
+      box.appendChild(title);
+      
+      const canvas = document.createElement('canvas');
+      drawIcon(canvas, size);
+      box.appendChild(canvas);
+      
+      const downloadBtn = document.createElement('button');
+      downloadBtn.textContent = '下载';
+      downloadBtn.onclick = () => {
+        const link = document.createElement('a');
+        link.download = `icon${size}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      };
+      box.appendChild(downloadBtn);
+      
+      const sizeText = document.createElement('p');
+      sizeText.textContent = `${size}x${size}`;
+      sizeText.style.color = '#666';
+      sizeText.style.fontSize = '12px';
+      box.appendChild(sizeText);
+      
+      return box;
+    }
+    
+    function generateAllIcons() {
+      const container = document.getElementById('iconContainer');
+      container.innerHTML = '';
+      
+      const sizes = [16, 32, 48, 128];
+      sizes.forEach(size => {
+        container.appendChild(createIconBox(size));
+      });
+    }
+    
+    // Generate icons on load
+    window.onload = generateAllIcons;
+  </script>
+</body>
+</html>
