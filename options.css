@@ -295,9 +295,11 @@ textarea.input-field {
 
 /* 保存区域 */
 .save-section {
+  position: sticky;
+  bottom: 0;
   background: white;
   border-radius: 12px;
-  padding: 25px;
+  padding: 16px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -537,7 +539,7 @@ body.compact-layout .modal-footer {
 }
 
 body.compact-layout .save-section {
-  padding: 20px;
+  padding: 10px;
 }
 
 body.compact-layout .checkbox-label {

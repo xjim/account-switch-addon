@@ -107,14 +107,11 @@ async function switchAccount(account) {
       return;
     }
     
-    const url = new URL(tab.url);
-    
     // 设置Cookie
     await chrome.cookies.set({
       url: tab.url,
       name: cookieKey,
       value: account.token,
-      domain: url.hostname,
       path: '/'
     });
     

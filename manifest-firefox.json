@@ -3,10 +3,11 @@
   "name": "AccountSwitch",
   "version": "1.0.0",
   "description": "快速切换不同账号的Firefox扩展",
+  "homepage_url": "https://github.com/xjim/account-switch-addon",
   "browser_specific_settings": {
     "gecko": {
-      "id": "accountswitch@mutu.dev",
-      "strict_min_version": "131.0"
+      "id": "account-switch-addon@xjim.dev",
+      "strict_min_version": "119.0"
     }
   },
   "permissions": [

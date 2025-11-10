@@ -3,6 +3,7 @@
   "name": "AccountSwitch",
   "version": "1.0.0",
   "description": "快速切换不同账号的Chrome扩展",
+  "homepage_url": "https://github.com/xjim/account-switch-addon",
   "permissions": [
     "cookies",
     "storage",
